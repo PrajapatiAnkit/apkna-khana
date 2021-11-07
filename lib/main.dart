@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
       ),
       home: const SplashScreen(),
       routes: AppRoutes.routes,
