@@ -1,5 +1,7 @@
 import 'package:apna_khana/constants/colors/app_colors.dart';
+import 'package:apna_khana/utils/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -9,56 +11,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late SharedPreferences sharedPreferences;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.amberAccent,
-            image: DecorationImage(
-              image: AssetImage("assets/images/food_background.png"),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.amberAccent.withOpacity(0.05), BlendMode.dstATop),
-            ),
-          ),
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.white,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey[600],
-                        ),
-                        hintText: "Find your taste",
-                        isDense: true,
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
+          child: Text("home"),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        backgroundColor: AppColors.white,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_travel),
+            label: 'Cart',
+          ),
+        ],
+      ),
     );
+  }
+
+  logout() async {
+    print("logouted successfully");
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove("token");
+    Navigator.of(context).pushReplacementNamed(AppRoutes.login);
   }
 }
